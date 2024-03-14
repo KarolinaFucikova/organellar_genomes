@@ -71,7 +71,6 @@ ggplot(aes(x = max_annual_temperature, y = GC_18S, colour = class), data=subset(
   ylab("GC content in 18S gene") +
   theme_minimal()
 
-
 boxplot(SSU_cp_GC~class, data=alg.fin)
 boxplot(cp_GC~class, data=alg.fin)
 
