@@ -62,6 +62,7 @@ ggplot(aes(x = max_annual_temperature, y = GC_18S, colour = Habitat), data=subse
                       labels = c("Freshwater", "Marine", "Terrestrial")) +
   theme_minimal()
 
+
 ggplot(aes(x = max_annual_temperature, y = GC_18S, colour = class), data=subset(alg.fin, !is.na(Habitat))) +
   geom_point(size = 2, alpha = 0.6, na.rm = TRUE) +
   scale_color_viridis_d() + 
@@ -69,6 +70,64 @@ ggplot(aes(x = max_annual_temperature, y = GC_18S, colour = class), data=subset(
   facet_wrap(~ Habitat) +
   xlab("Maximum Annual Temperature") +
   ylab("GC content in 18S gene") +
+  theme_minimal()
+
+#SSU_cp_GC as response variable
+ggplot(aes(x = max_annual_temperature, y = SSU_cp_GC, colour = Habitat), data=subset(alg.fin, !is.na(Habitat))) +
+  geom_point(aes(shape = Habitat), size = 2, alpha = 0.6, na.rm = TRUE) +
+  geom_smooth(method = "lm", se = FALSE, na.rm = TRUE) +
+  scale_color_viridis_d() + 
+  facet_wrap(~ class) +
+  xlab("Maximum Annual Temperature") +
+  ylab("GC content in chloroplast SSU gene") +
+  theme_minimal()
+
+ggplot(aes(x = max_annual_temperature, y = SSU_cp_GC, colour = class), data=subset(alg.fin, !is.na(Habitat))) +
+  geom_point(size = 2, alpha = 0.6, na.rm = TRUE) +
+  scale_color_viridis_d() + 
+  geom_smooth(method = "lm", se = FALSE, na.rm = TRUE) +
+  facet_wrap(~ Habitat) +
+  xlab("Maximum Annual Temperature") +
+  ylab("GC content in chloroplast SSU gene") +
+  theme_minimal()
+
+
+#cp_size as response variable
+ggplot(aes(x = max_annual_temperature, y = cp_size, colour = Habitat), data=subset(alg.fin, !is.na(Habitat))) +
+  geom_point(aes(shape = Habitat), size = 2, alpha = 0.6, na.rm = TRUE) +
+  geom_smooth(method = "lm", se = FALSE, na.rm = TRUE) +
+  scale_color_viridis_d() + 
+  facet_wrap(~ class) +
+  xlab("Maximum Annual Temperature") +
+  ylab("chloroplast size") +
+  theme_minimal()
+
+ggplot(aes(x = max_annual_temperature, y = cp_size, colour = class), data=subset(alg.fin, !is.na(Habitat))) +
+  geom_point(size = 2, alpha = 0.6, na.rm = TRUE) +
+  scale_color_viridis_d() + 
+  geom_smooth(method = "lm", se = FALSE, na.rm = TRUE) +
+  facet_wrap(~ Habitat) +
+  xlab("Maximum Annual Temperature") +
+  ylab("chloroplast size") +
+  theme_minimal()
+
+#cp_GC as response variable
+ggplot(aes(x = max_annual_temperature, y = cp_GC, colour = Habitat), data=subset(alg.fin, !is.na(Habitat))) +
+  geom_point(aes(shape = Habitat), size = 2, alpha = 0.6, na.rm = TRUE) +
+  geom_smooth(method = "lm", se = FALSE, na.rm = TRUE) +
+  scale_color_viridis_d() + 
+  facet_wrap(~ class) +
+  xlab("Maximum Annual Temperature") +
+  ylab("chloroplast GC content") +
+  theme_minimal()
+
+ggplot(aes(x = max_annual_temperature, y = cp_GC, colour = class), data=subset(alg.fin, !is.na(Habitat))) +
+  geom_point(size = 2, alpha = 0.6, na.rm = TRUE) +
+  scale_color_viridis_d() + 
+  geom_smooth(method = "lm", se = FALSE, na.rm = TRUE) +
+  facet_wrap(~ Habitat) +
+  xlab("Maximum Annual Temperature") +
+  ylab("chloroplast GC content") +
   theme_minimal()
 
 boxplot(SSU_cp_GC~class, data=alg.fin)
