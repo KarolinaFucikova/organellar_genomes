@@ -3,7 +3,7 @@ alg <-read.csv("data/Algae.csv", header= FALSE, na.strings="")
 ### na.strings ensures that empty cells are treated as missing data, not as a separate level of a factor
 
 colnames(alg) <-c("1", "class", "taxon", "genbank_18S", "GC_18S", "introns_18S", "genbank_28S", "GC_28S", "introns_28S", "cp_genbank", "cp_size", "cp_GC", "cp_coding", "cp_introns", "SSU_cp_GC", "mt_genbank", "mt_size", "mt_GC", "mt_coding", "mt_introns", "Habitat", "comments", "W",	"site_of_origin", "max_annual_temperature",	"min_annual_temperature", "annual_precipitation")
-alg.fin <-alg[3:160,2:27]
+alg.fin <-alg[3:159,2:27]
 
 #18S
 alg.fin$GC_18S <- as.numeric(alg.fin$GC_18S)
