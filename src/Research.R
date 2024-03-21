@@ -1,3 +1,7 @@
+library(ggplot2)
+library(geiger)
+library(phytools)
+
 alg <-read.csv("data/Algae.csv", header= FALSE, na.strings="")
 ### all terrestrial and freshwater have been unified by hand (copying and pasting)
 ### na.strings ensures that empty cells are treated as missing data, not as a separate level of a factor
@@ -38,8 +42,6 @@ plot(alg.fin$SSU_cp_GC~alg.fin$annual_precipitation)
 abline(lin)
 
 #graphs
-  #packages
-library(ggplot2)
 
 #alg.fin$Habitat <- as.factor(alg.fin$Habitat)
 # alg.aov2 <- aov(GC_18S ~ max_annual_temperature * Habitat, data=alg.fin)
@@ -138,8 +140,53 @@ plot(max_annual_temperature~SSU_cp_GC, data=alg.fin)
 plot(cp_size~SSU_cp_GC, data=alg.fin)
 plot(cp_size~cp_introns, data = alg.fin)
 
-#CP vs habitat		ANOVA
-#rrs gene vs temp		correlation
-#prepicaption vs cp		correlation
+## character mapping
+tree <- read.newick(file="data/18S_PhyML_tree.nhx")
+rownames(alg.fin) <- alg.fin[,2]
+# figure out where to root
+plot(tree, type="fan",cex=0.3)
+#nodelabels(text=1:tree$Nnode,node=1:tree$Nnode+Ntip(tree),frame="circle",cex=0.3)
+# it's node 157 that we want to be the root; it's not easy to figure out
+tree<-reroot(tree,157)
+plot(tree)
 
-#write.csv   correct alg.fin into a non-error table to then send to Professor so she has a working table
+#to exclude taxa that are extra in either data set
+#first find species in tree that ARE in the dataset
+matches <- match(alg.fin$taxon, tree$tip.label, nomatch = 0)
+
+# pick the column to map and store in a new object
+#Remove species in dataset not in the tree
+cp_size_tomap <- subset(alg.fin,select=cp_size, matches !=0)
+#turn the data into a vector
+cp_size<-as.matrix(cp_size_tomap)[,1]
+# if needed
+not_in_data<-setdiff(tree$tip.label, alg.fin$taxon)
+#Remove species in tree not in the dataset
+cleantree<-drop.tip(tree, not_in_data)
+plot(cleantree)
+
+#check for polytomies
+is.binary(cleantree)
+#estimate ancestral states and plot
+fit_ssu<-fastAnc(cleantree,cp_size,vars=TRUE,CI=TRUE)
+map <- contMap(cleantree,cp_size,plot=FALSE)
+plot(map,legend=0.5*max(nodeHeights(cleantree)),fsize=c(0.7,0.7))
+
+## the default rainbow palette has high as blue and low as red
+## this function will swap the colors to be more intuitive
+setMap<-function(x,...){
+  if(hasArg(invert)) invert<-list(...)$invert
+  else invert<-FALSE
+  n<-length(x$cols)
+  if(invert) x$cols<-setNames(rev(x$cols),names(x$cols))
+  else x$cols[1:n]<-colorRampPalette(...)(n)
+  x
+}
+plot(setMap(map,invert=TRUE))
+## more making pretty tree - ladderize
+map$tree<-ladderize.simmap(map$tree)
+
+plot(setMap(map,invert=TRUE),fsize=c(0.7,0.7))
+
+
+
