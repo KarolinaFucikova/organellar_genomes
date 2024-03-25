@@ -188,5 +188,30 @@ map$tree<-ladderize.simmap(map$tree)
 
 plot(setMap(map,invert=TRUE),fsize=c(0.7,0.7))
 
+# plotting in black and white
+bw.contMap<-setMap(map,c("white","black"))
+plot(bw.contMap, lwd=2, fsize=c(0.6,0.6))
+# this could work; it is clear at least
 
+# plotting in another color scheme
+purple.contMap<-setMap(map,c("#1AAE5C", "#5C1AAE"))
+plot(purple.contMap, lwd=2, fsize=c(0.6,0.6))
+# these variations are not very good
+
+#sunset_sunrise_palette <- c("#005070", "#34616d", "#67786e", "#9ea377", "#d7c56e", "#ffad6b", "#ff7c50", "#ff4e37", "#d6001c")
+sunset_sunrise_palette <- c("#d7c56e", "#ffad6b", "#ff7c50", "#ff4e37", "#d6001c")
+#plot(map, col = sunset_sunrise_palette, legend = 0.5 * max(nodeHeights(cleantree)), fsize = c(0.7, 0.7))
+sun.contMap<-setMap(map,sunset_sunrise_palette)
+plot(sun.contMap, lwd=2, fsize=c(0.6,0.6))
+
+library("wesanderson")
+wes.contMap<-setMap(map,wes_palette("Zissou1", n = 5))
+plot(wes.contMap, lwd=2, fsize=c(0.6,0.6))
+
+wes.contMap<-setMap(map,wes_palette("Moonrise3", n = 5))
+plot(wes.contMap, lwd=2, fsize=c(0.6,0.6))
+
+wes.contMap<-setMap(map,wes_palette("Darjeeling1", n = 5))
+plot(wes.contMap, lwd=2, fsize=c(0.6,0.6))
+plot(setMap(wes.contMap,invert=TRUE),fsize=c(0.7,0.7))
 
