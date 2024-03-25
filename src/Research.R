@@ -215,3 +215,17 @@ wes.contMap<-setMap(map,wes_palette("Darjeeling1", n = 5))
 plot(wes.contMap, lwd=2, fsize=c(0.6,0.6))
 plot(setMap(wes.contMap,invert=TRUE),fsize=c(0.7,0.7))
 
+#plotting with viridis
+viridis.contMap<-setMap(map,viridisLite::viridis(n=8))
+plot(viridis.contMap, lwd=2, fsize=c(0.6,0.6))
+plot(setMap(viridis.contMap,invert=TRUE),fsize=c(0.6,0.6))
+
+viridis.contMap<-setMap(map,viridisLite::magma(n=8))
+plot(viridis.contMap, lwd=2, fsize=c(0.6,0.6))
+plot(setMap(viridis.contMap,invert=TRUE),fsize=c(0.6,0.6))
+
+viridis.contMap<-setMap(map,viridisLite::inferno(n=8))
+plot(viridis.contMap, lwd=2, fsize=c(0.6,0.6))
+plot(setMap(viridis.contMap,invert=TRUE),fsize=c(0.6,0.6))
+ # https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html
+
